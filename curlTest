@@ -1,0 +1,29 @@
+#!/bin/bash
+
+jwToken="eyJhbGciOiJFUzI1NiJ9.eyJkYXQiOnsic2Vzc2lvbklEIjoxfX0.CvQkWNih4UdU1YXkfcFoPBKs_3veBs9KIZE_Q8e8uxlO4dVH3SgQw1gj05LgkR57W9rCCTVR-HBVm3ljYBQUnQ"
+
+case $1 in
+  ws)
+    curl -v --include --no-buffer \
+         -H "Connection: Upgrade" -H "Upgrade: websocket" \
+         -H "Sec-WebSocket-Key: SGVsbG8sIHdvcmxkIQ==" \
+         -H "Sec-WebSocket-Version: 13" \
+         -H 'Origin: http://localhost:7885' \
+         -H "Authorization: Bearer $jwToken" \
+          'http://localhost:8181/stream'
+    ;;
+  auth)
+   curl -v -H 'Origin: http://localhost:7885' \
+        -H 'Content-Type: application/json' --data '{"username":"xyz","password":"gaga"}' \
+         'http://localhost:8181/inlogin'
+    ;;
+  privpage)
+    curl -v -H 'Origin: http://localhost:7885' \
+         -H 'Authorization: Bearer $jwToken' \
+           'http://localhost:8181/private/test.html'
+    ;;
+  *)
+   echo "Unknown command: $1."
+   exit -10 ;;
+esac
+

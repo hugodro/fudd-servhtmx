@@ -1,0 +1,205 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.35.2.
+--
+-- see: https://github.com/sol/hpack
+
+name:           servhtmx
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/hugdro/servhtmx#readme>
+homepage:       https://github.com/hugdro/servhtmx#readme
+bug-reports:    https://github.com/hugdro/servhtmx/issues
+author:         Hugo DesRosiers
+maintainer:     hugo.desrosiers@boardingcities.com
+copyright:      None.
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    CHANGELOG.md
+
+source-repository head
+  type: git
+  location: https://github.com/hugdro/servhtmx
+
+library
+  exposed-modules:
+      Commands
+      Commands.Help
+      Commands.Serve
+      Commands.Version
+      DB.Connect
+      DB.Opers
+      MainLogic
+      Options
+      Options.Cli
+      Options.ConfFile
+      Options.Runtime
+      Pages.MockData
+      Pages.Page_1
+      WebServer.CorsPolicy
+      WebServer.JWT
+      WebServer.Server
+  other-modules:
+      Paths_servhtmx
+  hs-source-dirs:
+      src
+  default-extensions:
+      OverloadedStrings
+      DuplicateRecordFields
+      OverloadedRecordDot
+  ghc-options: -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
+  build-depends:
+      aeson
+    , async
+    , base >=4.7 && <5
+    , blaze-html
+    , blaze-htmx
+    , blaze-markup
+    , blaze-svg
+    , bytestring
+    , case-insensitive
+    , directory
+    , exceptions
+    , filepath
+    , gitrev
+    , http-api-data
+    , http-media
+    , http-types
+    , jose
+    , lens
+    , mtl
+    , optparse-applicative
+    , safe-exceptions
+    , servant
+    , servant-auth
+    , servant-auth-server
+    , servant-checked-exceptions
+    , servant-errors
+    , servant-htmx
+    , servant-multipart
+    , servant-server
+    , servant-websockets
+    , text
+    , time
+    , unix
+    , vector
+    , wai
+    , wai-cors
+    , wai-extra
+    , warp
+    , websockets
+    , yaml
+  default-language: Haskell2010
+
+executable servhtmx
+  main-is: Main.hs
+  other-modules:
+      Paths_servhtmx
+  hs-source-dirs:
+      app
+  default-extensions:
+      OverloadedStrings
+      DuplicateRecordFields
+      OverloadedRecordDot
+  ghc-options: -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      aeson
+    , async
+    , base >=4.7 && <5
+    , blaze-html
+    , blaze-htmx
+    , blaze-markup
+    , blaze-svg
+    , bytestring
+    , case-insensitive
+    , directory
+    , exceptions
+    , filepath
+    , gitrev
+    , http-api-data
+    , http-media
+    , http-types
+    , jose
+    , lens
+    , mtl
+    , optparse-applicative
+    , safe-exceptions
+    , servant
+    , servant-auth
+    , servant-auth-server
+    , servant-checked-exceptions
+    , servant-errors
+    , servant-htmx
+    , servant-multipart
+    , servant-server
+    , servant-websockets
+    , servhtmx
+    , text
+    , time
+    , unix
+    , vector
+    , wai
+    , wai-cors
+    , wai-extra
+    , warp
+    , websockets
+    , yaml
+  default-language: Haskell2010
+
+test-suite servhtmx-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_servhtmx
+  hs-source-dirs:
+      test
+  default-extensions:
+      OverloadedStrings
+      DuplicateRecordFields
+      OverloadedRecordDot
+  ghc-options: -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      aeson
+    , async
+    , base >=4.7 && <5
+    , blaze-html
+    , blaze-htmx
+    , blaze-markup
+    , blaze-svg
+    , bytestring
+    , case-insensitive
+    , directory
+    , exceptions
+    , filepath
+    , gitrev
+    , http-api-data
+    , http-media
+    , http-types
+    , jose
+    , lens
+    , mtl
+    , optparse-applicative
+    , safe-exceptions
+    , servant
+    , servant-auth
+    , servant-auth-server
+    , servant-checked-exceptions
+    , servant-errors
+    , servant-htmx
+    , servant-multipart
+    , servant-server
+    , servant-websockets
+    , servhtmx
+    , text
+    , time
+    , unix
+    , vector
+    , wai
+    , wai-cors
+    , wai-extra
+    , warp
+    , websockets
+    , yaml
+  default-language: Haskell2010
