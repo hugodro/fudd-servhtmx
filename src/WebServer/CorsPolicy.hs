@@ -35,7 +35,7 @@ defaultCorsPolicy = CorsConfig {
 
 
 setCorsPolicy :: CorsConfig -> Middleware
-setCorsPolicy CorsConfig{..} = cors $ \request ->
+setCorsPolicy cConfig = cors $ \request ->
   if isSwaggerRequest request || isPublicApi request
   then Just $ simpleCorsResourcePolicy { 
     corsMethods = simpleMethods <> [ "OPTIONS" ]
@@ -46,7 +46,7 @@ setCorsPolicy CorsConfig{..} = cors $ \request ->
     , corsMethods = simpleMethods <> [ "DELETE", "OPTIONS" ]
     , corsRequestHeaders = ["Authorization", "Content-Type"]
     , corsExposedHeaders = Nothing
-    , corsMaxAge = maxAge
+    , corsMaxAge = cConfig.maxAge
     , corsVaryOrigin = True
     , corsRequireOrigin = True
     , corsIgnoreFailures = False
@@ -55,7 +55,7 @@ setCorsPolicy CorsConfig{..} = cors $ \request ->
       matchHostOrigin request = Just . fromMaybe ([], False) $ do
         origin <- lookup hOrigin (requestHeaders request)
 
-        if CI.mk origin `elem` (mk . encodeUtf8 <$> allowedOrigins)
+        if CI.mk origin `elem` (mk . encodeUtf8 <$> cConfig.allowedOrigins)
         then return ([origin], True)
         else Nothing
 
@@ -65,4 +65,4 @@ setCorsPolicy CorsConfig{..} = cors $ \request ->
 
       isPublicApi request = case pathInfo request of
         []    -> False
-        (x:_) -> any (`DT.isPrefixOf` x) publicPrefixes
+        (x:_) -> any (`DT.isPrefixOf` x) cConfig.publicPrefixes

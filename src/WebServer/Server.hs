@@ -1,4 +1,4 @@
-{-# LANGUAGE RecordWildCards #-}
+{-- LANGUAGE RecordWildCards --}
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE TypeOperators #-}
@@ -241,12 +241,12 @@ anonHandlers =
 
 
 loginHandler :: LoginForm -> WebApp LoginResult
-loginHandler form@LoginForm {..} = do
+loginHandler form = do
   settings <- asks jwtSettings
   jwtRez <- liftIO $ Sauth.makeJWT (SessionContext 1) settings Nothing
   case jwtRez of
     Left err ->
-      throwError . UnexpectedError . DT.pack $ show err
+      throwError . UnexpectedError $ DT.pack $ show err
     Right jwtValue ->
       pure $ LoginResult {
           context = SessionContext 1
@@ -336,9 +336,9 @@ homePageHandler = do
 
 
 searchHandler :: SearchContent -> WebApp RawHtml
-searchHandler SearchContent {..} = do
+searchHandler needle = do
   projects <- asks mockProjects
-  pure . RawHtml . H.renderHtml $ demoSearch projects search
+  pure . RawHtml . H.renderHtml $ demoSearch projects needle.search
 
 
 newtype WebApp a = WebApp { 
@@ -401,12 +401,13 @@ data ServerApiError
 toServerError :: ServerApiError -> ServerError
 toServerError err =
   case err of
-    Unaccessible -> err401 { errBody = "Resource not accessible" }
-    NotImplemented -> err500 { errBody = "NotImplemented" }
-    UnexpectedError x -> err500 { errBody = LBS.fromStrict . encodeUtf8 $ x }
-    NotAuthorized x -> err401 { errBody = LBS.fromStrict . encodeUtf8 $ x }
-    NotFound x -> err404 { errBody = LBS.fromStrict . encodeUtf8 $ x }
-
+    Unaccessible -> err401 { errBody = "Resource not accessible." }
+    NotImplemented -> err500 { errBody = "Not Implemented." }
+    UnexpectedError x -> err500 { errBody = textToLBS x }
+    NotAuthorized x -> err401 { errBody = textToLBS x }
+    NotFound x -> err404 { errBody = textToLBS x }
+  where
+    textToLBS = LBS.fromStrict . encodeUtf8
 
 
 -- | Natural transformations between 'App' and 'Handler' monads

@@ -1,5 +1,3 @@
-{-# LANGUAGE DerivingStrategies #-}
-
 module Options.Runtime (defaultRun, RunOptions (..), WebServerOptions (..)) where
 
 import Data.Text (Text)
@@ -18,7 +16,7 @@ data RunOptions = RunOptions {
     , jwkConfFile :: Maybe FilePath
     , corsPolicy :: Maybe CorsConfig
   }
-  deriving stock (Show)
+  deriving (Show)
 
 defaultRun :: RunOptions
 defaultRun =
